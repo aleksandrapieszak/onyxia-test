@@ -1,0 +1,128 @@
+<?php
+
+namespace App\Entity;
+
+use Gedmo\Mapping\Annotation as Gedmo;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\TestRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: TestRepository::class)]
+#[ApiResource]
+class Test
+{
+    #[ORM\Id]
+    #[ORM\Column]
+    #[ORM\GeneratedValue]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
+
+    #[ORM\Column(length: 255,  nullable: true)]
+    #[Gedmo\Slug(fields: ['title'], unique: true, separator: '-')]
+    private ?string $slug = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $content = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column]
+    private ?int $createdBy = null;
+
+    #[ORM\Column(type: Types::GUID)]
+    #[ORM\GeneratedValue]
+    private ?string $guid = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): static
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(?string $content): static
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?int
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(int $createdBy): static
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function getGuid(): ?string
+    {
+        return $this->guid;
+    }
+
+    public function setGuid(string $guid): static
+    {
+        $this->guid = $guid;
+
+        return $this;
+    }
+}
+/*
+ *
+ *
+{
+   "title": "Title z GraphiQL",
+  "slug": "title-sritle",
+  "content": "abrakadabadl sjkdfh kajsdhfk ajshdfka jshdkfja hskdjfhaskjdhf",
+  "createdAt": "2023-12-21 17:58:07",
+  "createdBy": 1,
+  "guid": "556aec4a-0fb2-4f55-af51-0159d5b4f804"
+}
+ */
